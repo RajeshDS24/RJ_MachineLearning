@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1591250470131.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "157649248",
+    "id" : "CFD2C7B0",
+    "lastKnownWriteTime" : 1589543250,
+    "last_content_update" : 1589543250,
+    "path" : "E:/ICT583/Assignments/Rajesh/Excersise3/EX_3/Ex3.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "31,28",
+        "scrollLine" : "24"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

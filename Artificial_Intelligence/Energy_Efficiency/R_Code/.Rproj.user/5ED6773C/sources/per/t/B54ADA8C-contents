@@ -1,0 +1,144 @@
+
+
+# intalling packages
+install.packages("dplyr")
+library(dplyr)
+
+
+install.packages("ggplot2")
+library(ggplot2)
+
+install.packages("funModeling")
+library(funModeling)
+
+
+
+# importing the data from UCI 
+getwd()
+
+setwd("E:/1.My_Work/619/Ajay/Project")
+
+# Copy data to a variable.
+Energy_Eff <- read.csv("ENB2012_data.csv")
+
+# display the data. 
+head(Energy_Eff, 10)
+
+# to see the Column names
+colnames(Energy_Eff)
+
+# Check the number of rows and Columns
+dim(Energy_Eff)
+
+# Check the Strucure of the data
+str(Energy_Eff)
+
+# summary statistics of the data.
+summary(Energy_Eff)
+
+# Rename the Columns for better understanding and clarity
+names(Energy_Eff)[1] <- "Relative_Compactness"
+names(Energy_Eff)[2] <- "Surface_Area"
+names(Energy_Eff)[3] <- "Wall_Area"
+names(Energy_Eff)[4] <- "Roof_Area"
+names(Energy_Eff)[5] <- "Overall_Height"
+names(Energy_Eff)[6] <- "Orientation"
+names(Energy_Eff)[7] <- "Glazing_Area"
+names(Energy_Eff)[8] <- "Glazing_Area_Distribution"
+names(Energy_Eff)[9] <- "Heating_Load"
+names(Energy_Eff)[10] <- "Cooling_Load"
+
+
+# Check the Columns names
+unique(Energy_Eff$Relative_Compactness)
+unique(Energy_Eff$Surface_Area)
+unique(Energy_Eff$Wall_Area)
+unique(Energy_Eff$Roof_Area )
+unique(Energy_Eff$Overall_Height)
+unique(Energy_Eff$Orientation)
+unique(Energy_Eff$Glazing_Area)
+unique(Energy_Eff$Glazing_Area_Distribution)
+
+# check missing values
+colSums(is.na(Energy_Eff))
+# No missing values in the data set.
+
+
+
+## visualizing data setggplot(Energy_Eff, aes(x = factor(Relative_Compactness), y= Cooling_Load )) + geom_bar(stat = "identity")
+
+
+ggplot(Energy_Eff, aes(x = factor(Surface_Area), y= Cooling_Load )) + geom_bar(stat = "identity")  
+
+
+
+
+ggplot(Energy_Eff, aes(x = factor(Overall_Height), y= Cooling_Load )) + geom_bar(stat = "identity")
+  
+
+ggplot(Energy_Eff, aes(x = factor(Roof_Area), y= Cooling_Load )) + geom_bar(stat = "identity")  
+
+
+ggplot(Energy_Eff, aes(x = factor(Wall_Area), y= Cooling_Load )) + geom_bar(stat = "identity")  
+
+
+ggplot(Energy_Eff, aes(x = Orientation, y= Cooling_Load )) + geom_bar(stat = "identity")  
+
+
+plot_num(X)
+
+
+
+
+# Seperating X and Y1 data.
+
+heat_Load_data <- Energy_Eff[ , c(1:9)]
+colnames(heat_Load_data)
+
+head(heat_Load_data)
+
+cool_Load_data <- Energy_Eff[, -9]
+colnames(cool_Load_data)
+
+head(cool_Load_data)
+
+
+# Finding Correlation for heat_Load_data data. 
+
+cor.val.heat <- cor(heat_Load_data[,1:8], heat_Load_data[,9],method = "spearman")
+cor.val.heat
+barchart(cor.val.heat)
+
+# there is less correlation 
+
+
+# Finding Correlation for cool_Load_data data. 
+
+cor.val.cool <- cor(cool_Load_data[,1:8], cool_Load_data[,9],method = "spearman")
+cor.val.cool
+barchart(cor.val.cool)
+
+
+#### 
+
+
+## Set Seed
+set.seed(125)
+# from caret package
+sample_set <- createDataPartition(cancer_data$diagnosis, times = 1, p = 0.7, list = F)
+View(sample_set)
+
+# Training set
+sample_Set <- cancer_data[sample_set,]
+View(Train_set)
+dim(Train_set) ## 399 31
+
+# Testing set
+Test_set <- cancer_data[-sample_set, ]
+View(Test_set)
+dim(Test_set) ## 170 31
+
+
+
+
+

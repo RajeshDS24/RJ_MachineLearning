@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1590636952285.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3765734203",
+    "id" : "B54ADA8C",
+    "lastKnownWriteTime" : 1590586374,
+    "last_content_update" : 1590586374,
+    "path" : "E:/1.My_Work/619/Ajay/Project/ICT619_Project/ICT619_pro.R",
+    "project_path" : "ICT619_pro.R",
+    "properties" : {
+        "cursorPosition" : "137,14",
+        "scrollLine" : "114"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

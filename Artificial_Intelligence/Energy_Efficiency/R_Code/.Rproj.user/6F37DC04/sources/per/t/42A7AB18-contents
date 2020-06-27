@@ -1,0 +1,945 @@
+
+
+# installing packages
+install.packages("dplyr")
+library(dplyr)
+
+install.packages("ggplot2")
+library(ggplot2)
+
+install.packages("funModeling")
+library(funModeling)
+
+install.packages("caret")
+library(caret)
+
+install.packages("rpart")
+library(rpart)
+
+install.packages("rpart.plot")
+library(rpart.plot)
+
+install.packages('randomForest')
+library(randomForest)
+
+
+install.packages("NeuralNetTools")
+library(NeuralNetTools)
+
+install.packages("nnet")
+library(nnet)
+
+install.packages("e1071")
+library(e1071)
+
+
+# importing the data from UCI 
+getwd()
+
+# Copy data to a variable.
+Energy_Eff <- read.csv("ENB2012_data.csv")
+
+# display the data. 
+head(Energy_Eff, 10)
+
+# to see the Column names
+colnames(Energy_Eff)
+
+# Check the number of rows and Columns
+dim(Energy_Eff)
+
+# Check the Structure of the data
+str(Energy_Eff)
+
+# summary statistics of the data.
+summary(Energy_Eff)
+
+# Rename the Columns for better understanding and clarity
+names(Energy_Eff)[1] <- "Relative_Compactness"
+names(Energy_Eff)[2] <- "Surface_Area"
+names(Energy_Eff)[3] <- "Wall_Area"
+names(Energy_Eff)[4] <- "Roof_Area"
+names(Energy_Eff)[5] <- "Overall_Height"
+names(Energy_Eff)[6] <- "Orientation"
+names(Energy_Eff)[7] <- "Glazing_Area"
+names(Energy_Eff)[8] <- "Glazing_Area_Distribution"
+names(Energy_Eff)[9] <- "Heating_Load"
+names(Energy_Eff)[10] <- "Cooling_Load"
+
+
+# Check the Columns names
+unique(Energy_Eff$Relative_Compactness)
+unique(Energy_Eff$Surface_Area)
+unique(Energy_Eff$Wall_Area)
+unique(Energy_Eff$Roof_Area )
+unique(Energy_Eff$Overall_Height)
+unique(Energy_Eff$Orientation)
+unique(Energy_Eff$Glazing_Area)
+unique(Energy_Eff$Glazing_Area_Distribution)
+
+# check missing values
+colSums(is.na(Energy_Eff))
+# No missing values in the data set.
+
+
+
+
+## visualizing data setggplot(Energy_Eff, aes(x = factor(Relative_Compactness), y= Cooling_Load )) + geom_bar(stat = "identity")
+
+
+ggplot(Energy_Eff, aes(x = factor(Surface_Area), y= Cooling_Load )) + geom_bar(stat = "identity")  
+
+
+# ggplot(Energy_Eff, aes(x = factor(Overall_Height), y= Cooling_Load )) + geom_bar(stat = "identity")
+  
+
+ggplot(Energy_Eff, aes(x = factor(Roof_Area), y= Cooling_Load )) + geom_bar(stat = "identity")  
+
+
+ggplot(Energy_Eff, aes(x = factor(Wall_Area), y= Cooling_Load )) + geom_bar(stat = "identity")  
+
+
+# ggplot(Energy_Eff, aes(x = Orientation, y= Cooling_Load )) + geom_bar(stat = "identity")  
+
+
+plot_num(X)
+
+
+
+library(e1071)
+
+#par(mfrow=c(1, 2))  # divide graph area in 2 columns
+
+plot(density(Energy_Eff$Relative_Compactness), 
+     main="Density Plot: Relative_Compactness", ylab="Frequency", 
+     sub=paste("Skewness:", 
+               round(e1071::skewness(Energy_Eff$Relative_Compactness), 2)))  # density plot for 'Relative_Compactness'
+
+polygon(density(Energy_Eff$Relative_Compactness), col="orange")
+
+
+
+plot(density(Energy_Eff$Surface_Area), 
+     main="Density Plot: Surface Area", 
+     ylab="Frequency", 
+     sub=paste("Skewness:",round(e1071::skewness(Energy_Eff$Surface_Area), 2)))  # density plot for 'Surface Area'
+polygon(density(Energy_Eff$Surface_Area), col="green")
+
+
+
+plot(density(Energy_Eff$Wall_Area), 
+     main="Density Plot: Surface Area", ylab="Frequency", 
+     sub=paste("Skewness:", round(e1071::skewness(Energy_Eff$Wall_Area), 2)))  # density plot for 'wall Area'
+polygon(density(Energy_Eff$Wall_Area), col="skyblue")
+
+plot(density(Energy_Eff$Roof_Area), 
+     main="Density Plot: Roof_Area", ylab="Frequency", 
+     sub=paste("Skewness:", round(e1071::skewness(Energy_Eff$Roof_Area), 2)))  # density plot for 'Roof_Area'
+polygon(density(Energy_Eff$Roof_Area), col="darkred")
+
+plot(density(Energy_Eff$Overall_Height), 
+     main="Density Plot: Overall_Height", ylab="Frequency", 
+     sub=paste("Skewness:", round(e1071::skewness(Energy_Eff$Overall_Height), 2)))  # density plot for 'Overall_Height'
+polygon(density(Energy_Eff$Overall_Height), col="darkgreen")
+
+plot(density(Energy_Eff$Overall_Height), 
+     main="Density Plot: Overall_Height", 
+     ylab="Frequency", sub=paste("Skewness:", 
+                                 round(e1071::skewness(Energy_Eff$Overall_Height), 2)))  # density plot for 'Overall_Height'
+polygon(density(Energy_Eff$Overall_Height), col="darkgreen")
+
+# Check y variables
+# Heating load
+plot(density(Energy_Eff$Heating_Load), 
+     main="Density Plot: Heating_Load",
+     ylab="Frequency", sub=paste("Skewness:", 
+                                 round(e1071::skewness(Energy_Eff$Heating_Load), 2)))  # density plot for 'Heating_Load'
+polygon(density(Energy_Eff$Heating_Load), col="#FF8D00")
+
+# Cooling load
+plot(density(Energy_Eff$Cooling_Load), 
+     main="Density Plot: Cooling_Load", ylab="Frequency", 
+     sub=paste("Skewness:", round(e1071::skewness(Energy_Eff$Cooling_Load), 2)))  # density plot for 'Cooling_Load'
+polygon(density(Energy_Eff$Cooling_Load), col="#FF8D00")
+
+
+
+
+# Separating X and Y1 data.
+
+heat_Load_data <- Energy_Eff[ , c(1:9)]
+colnames(heat_Load_data)
+
+head(heat_Load_data)
+
+cool_Load_data <- Energy_Eff[, -9]
+colnames(cool_Load_data)
+
+# head(cool_Load_data)
+
+
+
+
+###### ------------------- Correlation between the variables ## Start
+
+# Finding Correlation for heat_Load_data data. 
+
+cor.val.heat <- cor(heat_Load_data[,1:8], heat_Load_data[,9],method = "spearman")
+cor.val.heat
+barchart(cor.val.heat)
+
+# there is less correlation 
+
+
+# Finding Correlation for cool_Load_data data. 
+
+cor.val.cool <- cor(cool_Load_data[,1:8], cool_Load_data[,9],method = "spearman")
+cor.val.cool
+barchart(cor.val.cool)
+
+
+###### ------------------- Correlation between the variables ## End
+
+
+
+## ----------- Set Seed for Heat_load_data
+set.seed(125)
+
+# from caret package
+sample_set.Heat <- createDataPartition(heat_Load_data$Heating_Load, times = 1, p = 0.7, list = F)
+# View(sample_set.Heat)
+
+# Training set
+Heat_Train <- heat_Load_data[sample_set.Heat,]
+dim(Heat_Train)  # -- 540   9
+
+# Testing set
+Heat_Test <- heat_Load_data[-sample_set.Heat, ]
+dim(Heat_Test) # -- 228   9
+
+
+
+
+##  ------------ Set Seed for Cool_load_data
+set.seed(125)
+
+# from caret package
+sample_set.cool <- createDataPartition(cool_Load_data$Cooling_Load, times = 1, p = 0.7, list = F)
+
+
+# Training set
+cool_Train <- cool_Load_data[sample_set.cool,]
+dim(cool_Train)  # -- 540   9
+
+# Testing set
+Cool_Test <- cool_Load_data[-sample_set.cool, ]
+# View(Cool_Test)
+dim(Cool_Test) # -- 228   9
+
+
+
+
+
+
+
+
+# Steps to be followed
+# Base Models are designed for Heating and Cooling loads separate 
+# Avg accuracy of both is calculated
+# later Normalization 
+# Feature Selection
+# Cross validation
+# Tuning the Model Design
+# 
+
+######## Models Start ~~~~~~~~~~~~~~~~~~~ Heat Load data. 
+# Model 1) Multiple Linear regression
+colnames(heat_Load_data)
+
+LR_model <- lm(Heating_Load  ~., data = Heat_Train)
+
+summary(LR_model)
+#  This is the base model for having all the variables. to know the significant variables.
+
+LR_model_Coff <- LR_model$coefficients 
+LR_model_Coff
+
+LR_model_ypred <- predict.lm(LR_model, Heat_Test,interval = "prediction", se.fit = T)
+LR_model_ypred$fit
+
+LR_model$fitted.values
+fitted(LR_model)
+
+abline(LR_model)
+plot(Heat_Train$Heating_Load,  LR_model$fitted.values)
+
+
+LR.pred = predict(LR_model, newdata = Heat_Test)
+
+# Summ of the squared error
+LR.sse = sum((LR.pred - Heat_Test$Heating_Load)^2)
+LR.sse ## 2323.97
+
+# mean Square Error
+LR.MSE = mean((LR.pred - Heat_Test$Heating_Load)^2)
+LR.MSE # 10.19285
+
+# RMSE 
+LR.RMSE <- sqrt(LR.MSE)
+LR.RMSE # 3.135
+
+
+# Model 2) Decision Tree
+
+DT_Model <- rpart(Heating_Load  ~.,method="anova",  data = Heat_Train)
+
+# plot the tree 
+plot(DT_Model, main = "Regression Tree for heat load data")
+text(DT_Model, use.n=TRUE, cex = .8)
+
+# -- or
+# hmm ..Better
+rpart.plot(DT_Model)
+
+
+DT.pred = predict(DT_Model, newdata = Heat_Test)
+
+DT.sse = sum((DT.pred - Heat_Test$Heating_Load)^2)
+DT.sse # 1403.365
+
+DT.MSE = mean((DT.pred - Heat_Test$Heating_Load)^2)
+DT.MSE # 6.155112
+
+DT.RMSE <- sqrt(DT.MSE)
+DT.RMSE # 2.67095
+
+
+#change in xerror as the splits increase
+# par(mfrow=c(1,2)) 
+rsq.rpart(DT_Model)
+
+printcp(DT_Model)
+
+plotcp(DT_Model)
+
+# Prune the Decision Tree model
+DT_pruned <- prune(DT_Model, cp= 0.01)
+DT_pruned
+
+rpart.plot(DT_pruned)
+
+
+# Model 3) Random Forest
+Rf_Model <- randomForest(Heating_Load  ~.,  data = Heat_Train)
+print(Rf_Model)
+
+
+
+RF.pred = predict(Rf_Model, newdata = Heat_Test)
+
+RF.sse = sum((RF.pred - Heat_Test$Heating_Load)^2)
+RF.sse # 1403.365
+
+RF.MSE = mean((RF.pred - Heat_Test$Heating_Load)^2)
+RF.MSE # 6.155112
+
+RF.RMSE <- sqrt(RF.MSE)
+RF.RMSE # 0.9940235
+
+
+
+
+plot(Rf_Model, main = "Error vs Number of Trees Graph")
+# We can see how the error is dropping as we increase number of trees
+
+
+# variable importance
+Rf_Model$importance
+
+
+# Compare predicted and actual values for train data
+plot(Heat_Train$Heating_Load, predict( Rf_Model, newdata=Heat_Train), xlab =
+       "Actual", ylab = "Predicted")
+
+# Compare the out of bag (OOB) predictions with actuals
+plot(Heat_Train$Heating_Load, Rf_Model$predicted, xlab = "Actual", ylab =
+       "Predicted")
+
+# Compare predicted and actual values for test data
+plot(Heat_Test$Heating_Load, Rf_Model$test$predicted, xlab = "Actual", ylab =
+       "Predicted")
+
+
+oob.err=double(13)
+test.err=double(13)
+
+#mtry is no of Variables randomly chosen at each split
+for(mtry in 1:13) 
+{
+  rf = randomForest(Heating_Load  ~.,  data =  Heat_Train, mtry = mtry, ntree=400) 
+  oob.err[mtry] = rf$mse[400] #Error of all Trees fitted
+  
+  pred<-predict(rf, Heat_Test) #Predictions on Test Set for each Tree
+  test.err[mtry]= with(Heat_Test, mean( (Heating_Load - pred)^2)) #Mean Squared Test Error
+  
+  cat(mtry," ") #printing the output to the console
+  
+}
+
+# Test Error
+test.err
+mean(test.err) # 0.7091
+
+# Out of Bag Error Estimation
+oob.err
+mean(oob.err) # 0754
+
+
+# Plotting both Test Error and Out of Bag Error
+matplot(1:mtry , cbind(oob.err,test.err), pch=19 , col=c("red","blue"),type="b",ylab="Mean Squared Error",xlab="Number of Predictors Considered at each Split")
+legend("topright",legend=c("Out of Bag Error","Test Error"),pch=19, col=c("red","blue"))
+# For Explanation https://www.r-bloggers.com/random-forests-in-r/
+
+
+# Model 4) Neural Networks
+summary(heat_Load_data$Heating_Load)
+
+NN_Model <- nnet(Heating_Load/43.10  ~., data = Heat_Train, size = 10, decay = 0.1, maxit = 1000, linout = FALSE )
+
+# Plot the N
+plotnet(NN_Model)
+
+NN_RMSE <- sqrt(mean(NN_Model$fitted.values * 43.10 - Heat_Train$Heating_Load)^2)
+NN_RMSE #  0.138532
+                                                                             
+NN_RMSE_val <- sqrt(mean((predict(NN_Model, Heat_Test* 43.10 - Heat_Test$Heating_Load)^2)))
+NN_RMSE_val # 0.4051978
+
+
+
+# MOdel 5) Support Vector Machine Regression
+SVM_Model <- svm(Heating_Load  ~.,  data = Heat_Train)
+
+summary(SVM_Model)
+
+SVM_pred <- predict(SVM_Model, newdata = Heat_Train)
+
+# points(SVM_pred, Heat_Train$Heating_Load, col = "red", pch=16)
+
+# RMSE value for SVM  
+
+SVM_RMSE <- function(error)
+{
+  sqrt(mean(error^2))
+}
+
+SVM_error <- SVM_Model$residuals
+
+Pred_RMSE <- SVM_RMSE(SVM_error)
+Pred_RMSE ## 2.0377
+
+
+
+
+######## Models Start ~~~~~~~~~~~~~~~~~~~ Cool Load data. 
+
+# Model 1) Multiple Linear regression
+colnames(cool_Load_data)
+
+LR_model.C <- lm(Cooling_Load  ~., data = cool_Train)
+
+summary(LR_model.C)
+#  This is the base model for having all the variables. to know the significant variables.
+
+LR_model_Coff_C <- LR_model.C$coefficients 
+LR_model_Coff_C
+
+LR_model_ypred_c <- predict.lm(LR_model.C, Cool_Test,interval = "prediction", se.fit = T)
+LR_model_ypred_c$fit
+
+LR_model.C$fitted.values
+fitted(LR_model.C)
+
+abline(LR_model.C)
+plot(cool_Train$Cooling_Load,  LR_model.C$fitted.values)
+
+
+LR.pred_c = predict(LR_model.C, newdata = Cool_Test)
+
+# Summ of the squared error
+LR.sse_c = sum((LR.pred_c - Cool_Test$Cooling_Load)^2)
+LR.sse_c ## 2512.733
+
+# mean Square Error
+LR.MSE_c = mean((LR.pred_c - Cool_Test$Cooling_Load)^2)
+LR.MSE_c # 11.02076
+
+LR.RMSE_c <- sqrt(LR.MSE_c)
+LR.RMSE_c ## 3.319753
+
+
+
+# Model 2) Decision Tree
+
+DT_Model_c <- rpart(Cooling_Load  ~.,method="anova",  data = cool_Train)
+
+# plot the tree 
+plot(DT_Model_c, main = "Regression Tree for Cool load data")
+text(DT_Model_c, use.n=TRUE, cex = .8)
+
+# -- or
+# hmm ..Better
+rpart.plot(DT_Model_c)
+
+
+DT.pred_c = predict(DT_Model_c, newdata = Cool_Test)
+
+DT.sse_c = sum((DT.pred_c - Cool_Test$Cooling_Load)^2)
+DT.sse_c # 1403.365
+
+DT.MSE_c = mean((DT.pred_c - Cool_Test$Cooling_Load)^2)
+DT.MSE_c # 6.155112
+
+DT.RMSE_c <- sqrt(DT.MSE)
+DT.RMSE_c # 2.670504
+
+
+#change in xerror as the splits increase
+# par(mfrow=c(1,2)) 
+
+rsq.rpart(DT_Model_c)
+printcp(DT_Model_c)
+plotcp(DT_Model_c)
+
+# Prune the Decision Tree model
+DT_pruned_c <- prune(DT_Model_c, cp= 0.01)
+DT_pruned_c
+
+rpart.plot(DT_pruned_c)
+
+
+
+# Model 3) Random Forest
+Rf_Model_c <- randomForest(Cooling_Load  ~.,  data = cool_Train)
+print(Rf_Model_c)
+
+RF.pred_c = predict(Rf_Model_c, newdata = Cool_Test)
+
+RF.sse_c = sum((RF.pred_c - Cool_Test$Cooling_Load)^2)
+RF.sse_c # 661.2625
+
+RF.MSE_c = mean((RF.pred_c - Cool_Test$Cooling_Load)^2)
+RF.MSE_c # 2.880504
+
+RF.RMSE_c <- sqrt(RF.MSE_c)
+RF.RMSE_c #  1.699425
+
+
+
+plot(Rf_Model_c, main = "Error vs Number of Trees Graph")
+# We can see how the error is dropping as we increase number of trees
+
+
+# variable importance
+Rf_Model_c$importance
+
+
+# Compare predicted and actual values for train data
+plot(cool_Train$Cooling_Load, predict( Rf_Model_c, newdata=cool_Train), xlab =
+       "Actual", ylab = "Predicted")
+
+# Compare the out of bag (OOB) predictions with actual
+plot(cool_Train$Cooling_Load, Rf_Model_c$predicted, xlab = "Actual", ylab =
+       "Predicted")
+
+# Compare predicted and actual values for test data
+plot(Cool_Test$Cooling_Load, Rf_Model_c$test$predicted, xlab = "Actual", ylab =
+       "Predicted")
+
+
+oob.err_c=double(13)
+test.err_c=double(13)
+
+#mtry is no of Variables randomly chosen at each split
+for(mtry in 1:13) 
+{
+  rf = randomForest(Cooling_Load  ~.,  data =  cool_Train, mtry = mtry, ntree=400) 
+  oob.err_c[mtry] = rf$mse[400] #Error of all Trees fitted
+  
+  pred<-predict(rf, Cool_Test) #Predictions on Test Set for each Tree
+  test.err_c[mtry]= with(Cool_Test, mean( (Cooling_Load - pred)^2)) #Mean Squared Test Error
+  
+  cat(mtry," ") #printing the output to the console
+  
+}
+
+# Test Error
+test.err_c
+mean(test.err_c)
+
+# Out of Bag Error Estimation
+oob.err_c
+mean(oob.err_c) # 3.680723
+
+
+RMSE_RF_c <- sqrt(mean(oob.err_c))
+RMSE_RF_c # 1.918521
+
+
+# Plotting both Test Error and Out of Bag Error
+matplot(1:mtry , cbind(oob.err_c,test.err_c), pch=19 , col=c("red","blue"),type="b",ylab="Mean Squared Error",xlab="Number of Predictors Considered at each Split")
+legend("topright",legend=c("Out of Bag Error","Test Error"),pch=19, col=c("red","blue"))
+
+
+
+# Model 4) Neural Networks
+summary(cool_Load_data$Cooling_Load)
+
+NN_Model_c <- nnet(Cooling_Load/43.10  ~., data = cool_Train, size = 10, decay = 0.1, maxit = 1000, linout = FALSE )
+
+# Plot the N
+plotnet(NN_Model_c)
+
+NN_RMSE_c <- sqrt(mean(NN_Model_c$fitted.values * 43.10 - cool_Train$Cooling_Load)^2)
+NN_RMSE_c #  0.138532
+
+NN_RMSE_val_c <- sqrt(mean((predict(NN_Model_c, Cool_Test* 43.10 - Cool_Test$Cooling_Load)^2)))
+NN_RMSE_val_c # 0.5634714
+
+
+
+# MOdel 5) Support Vector Machine Regression
+SVM_Model_c <- svm(Cooling_Load  ~.,  data = cool_Train)
+
+summary(SVM_Model_c)
+
+SVM_pred_c <- predict(SVM_Model_c, newdata = cool_Train)
+
+points(SVM_pred_c, cool_Train$Cooling_Load, col = "red", pch=16)
+
+# RMSE value for SVM  
+
+SVM_RMSE_c <- function(error)
+{
+  sqrt(mean(error^2))
+}
+
+SVM_error_c <- SVM_Model_c$residuals
+
+Pred_RMSE_c <- SVM_RMSE_c(SVM_error)
+Pred_RMSE_c ## 2.037786
+
+
+
+### -----------------------------------------------------
+
+## Parameter selection from the Multiple Linear regression
+# From the summary of the multiple Linear regression we have 
+# significant values. which mean they have some significant impact on the output function
+summary(LR_model.C)
+
+heat_ss <- heat_Load_data %>% select("Relative_Compactness", "Surface_Area", "Wall_Area", "Overall_Height","Glazing_Area", "Heating_Load") 
+cool_ss <- cool_Load_data %>% select("Relative_Compactness", "Surface_Area", "Wall_Area", "Overall_Height","Glazing_Area", "Cooling_Load") 
+
+head(heat_ss)
+colnames(heat_ss)
+
+unique(heat_ss$Relative_Compactness)
+unique(heat_ss$Surface_Area)
+unique(heat_ss$Wall_Area)
+unique(heat_ss$Overall_Height) # factor
+unique(heat_ss$Glazing_Area) # multi-class factor.
+
+# Except Overall_Height we need to normalize the other variables
+
+# Create a normalization function
+
+normalize <- function(x) {
+  return ((x - min(x)) / (max(x) - min(x)))
+}
+
+# Normalizing heat load data
+
+heat_ss$Relative_Compactness <- normalize(heat_ss$Relative_Compactness)
+heat_ss$Surface_Area <- normalize(heat_ss$Surface_Area)
+heat_ss$Wall_Area <- normalize(heat_ss$Wall_Area)
+heat_ss$Glazing_Area <- normalize(heat_ss$Glazing_Area)
+heat_ss$Heating_Load <- normalize(heat_ss$Heating_Load)
+heat_ss$Overall_Height <- normalize(heat_ss$Overall_Height)
+
+View(heat_ss)
+
+# Normalizing cool load data
+
+cool_ss$Relative_Compactness <- normalize(cool_ss$Relative_Compactness)
+cool_ss$Surface_Area <- normalize(cool_ss$Surface_Area)
+cool_ss$Wall_Area <- normalize(cool_ss$Wall_Area)
+cool_ss$Glazing_Area <- normalize(cool_ss$Glazing_Area)
+cool_ss$Cooling_Load <- normalize(cool_ss$Cooling_Load)
+cool_ss$Overall_Height <- normalize(cool_ss$Overall_Height)
+
+View(cool_ss)
+
+## Data Partitioning
+
+# For heat Load data
+set.seed(222)
+
+heat_set <- createDataPartition(heat_ss$Heating_Load, times = 1, p = 0.75, list = F)
+Train_h <- heat_ss[heat_set,]
+Test_h <- heat_ss[-heat_set, ]
+
+# For Cool load data
+set.seed(653)
+
+cool_set <- createDataPartition(cool_ss$Cooling_Load, times = 1, p = 0.75, list = F)
+Train_c <- cool_ss[cool_set,]
+Test_c <- cool_ss[-cool_set, ]
+
+
+
+
+## Implementing Cross validation method for performance tuning.
+## Cross validation
+
+CV_control <- trainControl( # 10 fold cross validation
+                            method = "repeatedcv",
+                            number = 10,
+                            ## repeated ten times
+                            repeats = 10)
+
+# install the caret package for tuning with CV
+# library(caret)
+
+# package for calculating time taken for each model
+install.packages("tictoc")
+library(tictoc)
+
+## Multiple Linear Regression
+set.seed(825)
+
+# start time
+tic()
+
+LR_cv_h <- train(Heating_Load ~ ., data = Train_h, 
+                 method = "lm", 
+                 trControl = CV_control,
+                 verbose = FALSE)
+
+LR_cv_h   # RMSE - 0.07810822  
+
+summary(LR_cv_h)
+
+LR_cv_h$results
+
+# RMSE
+MLR_mean_h_RMSE <- mean(LR_cv_h$results$RMSE) # 0.07810822
+MLR_mean_h_RMSE
+toc() # 1.8 secs
+
+
+## ------------------- Decision Tree
+tic()
+
+DT_CV_h <- train(Heating_Load ~ ., data = Train_h, 
+                 method = "rpart2", 
+                 trControl = CV_control)
+
+  
+DT_CV_h$results
+
+DT_mean_h_RMSE <- mean(DT_CV_h$results$RMSE) # 0.09672152
+
+toc() # 1.85 sec 
+
+
+## ------------------- Random Forest
+tic()
+
+RF_CV_h <- train(Heating_Load ~ ., data = Train_h, 
+                 method = "rf", 
+                 trControl = CV_control,
+                 verbose = FALSE)
+
+
+RF_CV_h$results
+RF_mean_h_RMSE <- mean(RF_CV_h$results$RMSE) # 0.0226566
+RF_mean_h_RMSE # 0.02262863
+
+toc() # 102.89
+
+# ------------------- Neural Networks
+
+tic()
+
+NN_CV_h <- train(Heating_Load ~ ., data = Train_h, 
+                 method = "nnet", 
+                 trControl = CV_control,
+                 verbose = FALSE)
+
+
+plotnet(NN_CV_h)
+
+NN_CV_h$results
+NN_mean_h_RMSE <- mean(NN_CV_h$results$RMSE) # 0.06166 
+NN_mean_h_RMSE # 0.06305982
+
+toc() # 57.77 secs
+
+
+# ------------------- SVM regression 
+
+tic()
+
+SVM_CV_h <- train(Heating_Load ~ ., data = Train_h, 
+                 method = "svmLinear", 
+                 trControl = CV_control,
+                 verbose = FALSE)
+
+
+SVM_CV_h$results
+SVM_mean_h_RMSE <- mean(SVM_CV_h$results$RMSE) # 0.07839 
+SVM_mean_h_RMSE # 0.07838123
+
+toc() # 6.4 secs
+
+
+###  ~~~~~~~~~~ Tuning models for cool load data
+
+
+## Multiple Linear Regression
+set.seed(825)
+
+# start time
+tic()
+
+LR_cv_c <- train(Cooling_Load ~ ., data = Train_c, 
+                 method = "lm", 
+                 trControl = CV_control,
+                 verbose = FALSE)
+
+LR_cv_c   # RMSE - 0.07810822  
+
+summary(LR_cv_c)
+LR_cv_c$results
+
+MLR_mean_c_RMSE <- mean(LR_cv_c$results$RMSE) # 0.08345112
+
+MLR_mean_c_RMSE # 0.08328995
+
+toc() # 1.82 secs
+
+
+## ------------------- Decision Tree
+tic()
+
+DT_CV_c <- train(Cooling_Load ~ ., 
+                 data = Train_c, 
+                 method = "rpart", 
+                 trControl = CV_control)
+
+
+DT_CV_c$results
+# RMSE 
+DT_mean_c_RMSE <- mean(DT_CV_c$results$RMSE) # 0.1229874
+DT_mean_c_RMSE # 0.1260
+ 
+toc() #2.63sec
+
+## ------------------- Random Forest
+tic()
+
+RF_CV_c <- train(Cooling_Load ~ ., data = Train_c, 
+                 method = "rf", 
+                 trControl = CV_control,
+                 verbose = FALSE)
+
+
+RF_CV_c$results
+
+# RMSE
+RF_mean_c_RMSE <- mean(RF_CV_c$results$RMSE) ## 0.04789687
+RF_mean_c_RMSE
+
+toc()
+
+# ------------------- Neural Networks
+
+tic()
+
+NN_CV_c <- train(Cooling_Load ~ ., data = Train_c, 
+                 method = "nnet", 
+                 trControl = CV_control,
+                 verbose = FALSE)
+
+plotnet(NN_CV_c)
+
+NN_CV_c$results
+NN_mean_c_RMSE <- mean(NN_CV_c$results$RMSE) #  0.07505944
+NN_mean_c_RMSE
+
+toc() #  60.62 secs
+
+
+# ------------------- SVM regression 
+
+tic()
+
+SVM_CV_c <- train(Cooling_Load ~ ., data = Train_c, 
+                  method = "svmLinear", 
+                  trControl = CV_control,
+                  verbose = FALSE)
+
+
+SVM_CV_c$results
+SVM_mean_c_RMSE <- mean(SVM_CV_c$results$RMSE) #    0.08465804
+SVM_mean_c_RMSE
+
+toc() # 4.68
+
+
+## interpretation of results
+## Before tuning the models
+Avg.MLR <- (LR.RMSE + LR.RMSE_c)/2
+Avg.DT <- (DT.RMSE + DT.RMSE_c)/2    
+Avg.RF <- (RF.RMSE + RF.RMSE_c)/2
+Avg.NN <- (NN_RMSE + NN_RMSE_c)/2
+Avg.SVM <- (Pred_RMSE + Pred_RMSE_c)/2
+
+# After tuning the models
+
+Tune_Avg_MLR <- (MLR_mean_h_RMSE + MLR_mean_c_RMSE)/2
+Tune_Avg_DT <- (DT_mean_h_RMSE + DT_mean_c_RMSE)/2
+Tune_Avg_RF <- (RF_mean_h_RMSE + RF_mean_c_RMSE)/2
+Tune_Avg_NN <- (NN_mean_h_RMSE + NN_mean_c_RMSE)/2
+Tune_Avg_SVM <- (SVM_mean_h_RMSE + SVM_mean_c_RMSE)/2
+
+
+Models <- list(Before_Tune = c(MLR = Avg.MLR,DT =  Avg.DT, RF = Avg.RF, NN = Avg.NN, SVM = Avg.SVM), After_Tune = c(MLR = Tune_Avg_MLR, DT =  Tune_Avg_DT, RF = Tune_Avg_RF, NN = Tune_Avg_NN, SVM = Tune_Avg_SVM))
+
+Final_models <- as.data.frame(Models)
+Final_models
+
+library(tibble)
+Final_models <- rownames_to_column(Final_models, var="Models")
+Final_models
+
+
+# Before Tuning
+Final_models %>% ggplot(aes(x = Final_models$Models, y = Final_models$Before_Tune, 
+                            fill =Final_models$Models )) + geom_bar(stat = "identity") + 
+  labs(title = "RMSE values of the models before Tuning",
+       x = "Models used", y = "RMSE value") + 
+  theme_minimal(base_size=9)+ 
+  geom_text(aes(label= round(Final_models$Before_Tune, 2)), vjust=0.001, color="black", size=3.5)
+
+
+# After Tuning
+Final_models %>% ggplot(aes(x = Final_models$Models, y = Final_models$After_Tune, 
+                            fill =Final_models$Models )) + geom_bar(stat = "identity") + 
+  labs(title = "RMSE values of the models After Tuning",
+       x = "Models used", y = "RMSE value") + 
+  theme_minimal(base_size=9) + 
+  geom_text(aes(label= round(Final_models$After_Tune, 2)), vjust=0.001, color="black", size=3.5)
+
+
